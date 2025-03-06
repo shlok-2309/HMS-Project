@@ -1,0 +1,89 @@
+﻿@model IEnumerable<HospitalManagementSysytem.Models.ShowRegistration>
+
+@{
+    ViewBag.Title = "ShowData";
+}
+
+<h2 class="text-center">Patient Records</h2>
+
+<p>
+    <a href="@Url.Action("AddPatient")" class="btn btn-primary">Create New</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr class="table-dark text-center">
+                <th>Name</th>
+                <th>Address</th>
+                <th>Department</th>
+                <th>Doctor</th>
+                <th>Fees</th>
+                <th>Discount</th>
+                <th>NetAmount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="text-center">
+                    <td>@Html.ActionLink(item.rName, "AddPatient", new { P = item.rId })</td>
+                    <td>@Html.DisplayFor(modelItem => item.rAdress)</td>
+                    <td>@Html.DisplayFor(modelItem => item.rDepartment)</td>
+                    <td>@Html.DisplayFor(modelItem => item.rDoctor)</td>
+                    <td>@Html.DisplayFor(modelItem => item.rFees)</td>
+                    <td>@Html.DisplayFor(modelItem => item.rDiscount)</td>
+                    <td>@Html.DisplayFor(modelItem => item.rNetAmount)</td>
+                    <td>
+                        <a href="@Url.Action("DeleteData", new { P = item.rId })" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="footer">
+    &copy; 2025 Hospital Management System | Designed by Shlok Yadav
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #eeeee4;
+
+    }
+    .table {
+        width: 100%;
+        height: 80%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .table th {
+            background: #333;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table td {
+            background: #f8f9fa;
+        }
+    .footer {
+        width: 100%;
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 14px;
+        position: relative;
+        bottom: 0;
+    }
+</style>

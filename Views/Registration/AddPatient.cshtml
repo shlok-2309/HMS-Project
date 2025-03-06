@@ -1,0 +1,190 @@
+﻿@model HospitalManagementSysytem.Models.tblRegistration1
+@{
+    ViewBag.Title = "AddPatient";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #eeeee4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 85vh;
+    }
+
+    .navbar {
+        width: 100%;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        width: 100%;
+
+    }
+
+    .form-container {
+        background: #eeeee4;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            width: 40%;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 55%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+    .btn-container {
+        text-align: right;
+    }
+
+        .btn-container input {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+            .btn-container input:hover {
+                background-color: #0056b3;
+            }
+
+    .netAmount {
+        background-color: lightgrey;
+        color: #495057;
+        font-weight: bold;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 8px;
+        width: 55%;
+        cursor: not-allowed;
+    }
+
+        .netAmount:focus {
+            outline: none;
+        }
+
+
+    .footer {
+        width: 100%;
+        background-color: #333;
+        color: white;
+        text-align: center;
+        margin-top: 150px;
+        padding: 15px;
+        font-size: 14px;
+        position: absolute;
+        bottom: 0;
+    }
+
+</style>
+<div class="container"> 
+    <div class="form-container">
+        @using (Html.BeginForm("AddPatient", "Registration", FormMethod.Post))
+        {
+            @Html.HiddenFor(model => model.rId)
+            <div class="form-group">
+                <label>Name</label>
+                @Html.EditorFor(model => model.rName, new { htmlAttributes = new { @class = "form-control", placeholder = "Please Enter Name" } })
+            </div>
+
+            <div class="form-group">
+                <label>Address</label>
+                @Html.TextAreaFor(model => model.rAdress, new { @class = "form-control", placeholder = "Please Enter Address" })
+            </div>
+
+            <div class="form-group">
+                <label>Department</label>
+                @Html.DropDownListFor(model => model.rDepartment,
+                    new SelectList(Model.lstDepartment, "DepartmentId", "DepartmentName"),
+                    "--Select--",
+                    new { @class = "form-control", onchange = "BindDoctor()" })
+            </div>
+
+            <div class="form-group">
+                <label>Doctor</label>
+                @Html.DropDownListFor(model => model.rDoctor, new SelectList(Model.lstDoctor, "DoctorId", "DoctorName"), "--Select--", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>Fees</label>
+                @Html.EditorFor(model => model.rFees, new { htmlAttributes = new { @class = "form-control", oninput = "calculateNetAmount()" } })
+            </div>
+
+            <div class="form-group">
+                <label>Discount</label>
+                @Html.EditorFor(model => model.rDiscount, new { htmlAttributes = new { @class = "form-control", oninput = "calculateNetAmount()" } })
+            </div>
+
+            <div class="form-group">
+                <label>Net Amount</label>
+                @Html.TextBoxFor(model => model.rNetAmount, new { @class = "form-control netAmount", @readonly = "readonly" })
+            </div>
+
+            <div class="btn-container">
+                <input type="submit" value="@ViewBag.BT" />
+            </div>
+        }
+    </div>
+</div>
+
+<div class="footer">
+    &copy; 2025 Hospital Management System | Designed by Shlok Yadav
+</div>
+
+<script src="~/Scripts/jquery-3.7.0.min.js"></script>
+<script type="text/javascript">
+    function BindDoctor() {
+        $.ajax({
+            url: '../Registration/GetDoctor',
+            type: 'post',
+            data: { A: $("#rDepartment").val() },
+            success: (data) => {
+                $("#rDoctor").empty()
+                $("#rDoctor").append($('<option></option>').html("--Select--").val(0))
+                for (let i = 0; i < data.length; i++) {
+                    $("#rDoctor").append($('<option></option>').html(data[i].DoctorName).val(data[i].DoctorId))
+                }
+            },
+            error: () => {
+                alert('Doctor not found!!!')
+            }
+        })
+    }
+
+    function calculateNetAmount() {
+        var fees = parseInt(document.getElementById("rFees").value)
+        var discount = parseInt(document.getElementById("rDiscount").value)
+        document.parseInt("rNetAmount").value = (fees - discount)
+    }
+</script>

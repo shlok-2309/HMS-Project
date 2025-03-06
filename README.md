@@ -4,11 +4,11 @@
 - Optimized menu management workflows, significantly enhancing efficiency for hospital staff.
 
 ## Screenshots
-### Screenshots - 1
+### Screenshot - 1
 ![image alt](https://github.com/shlok-2309/HMS-Project/blob/68fdf1c01e4f2c8557895d56c8c7a110fa513aca/Screenshot-1.jpg)
 
-### Screenshots - 2
+### Screenshot - 2
 ![image alt](https://github.com/shlok-2309/HMS-Project/blob/44bb552e9b1eb5ee0cf77e24e9a43f6b52cc4eda/Screenshot-2.jpg)
 
-### Screenshots - 3
-![image alt]()
+### Screenshot - 3
+![image alt](https://github.com/shlok-2309/HMS-Project/blob/cd11aeb73f40f8fc08c4bebfdae6c17ced1692e5/Screenshot-3.jpg)
